@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이템팜 검색 1페이지 노출 점유 전략 중간 보고</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            word-break: keep-all; 
+            background-color: #f8fafc;
+            color: #0f172a;
+            line-height: 1.7;
+        }
+        .report-container { 
+            max-width: 850px; 
+            margin: 2rem auto; 
+            background: white; 
+            border: 1px solid #e2e8f0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.05em;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.25rem 1rem; border-bottom: 1px solid #f1f5f9; text-align: left; }
+        th { background-color: #f8fafc; font-size: 0.875rem; color: #64748b; font-weight: 700; }
+        .highlight-red { color: #ef4444; font-weight: 900; }
+        .highlight-blue { color: #2563eb; font-weight: 900; }
+        .highlight-green { color: #10b981; font-weight: 900; }
+        .data-card { background: #f8fafc; border-radius: 1rem; padding: 1.5rem; text-align: center; border: 1px solid #e2e8f0; }
+        
+        .screenshot-container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .screenshot-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-0">
+
+    <div class="report-container shadow-sm">
+        <!-- 헤더 영역 -->
+        <header class="bg-slate-900 p-10 md:p-16 text-white">
+            <p class="text-blue-400 font-black tracking-[0.3em] text-xs mb-4 uppercase">Marketing Strategy Interim Report</p>
+            <h1 class="text-3xl md:text-4xl font-black leading-tight tracking-tighter mb-8">
+                아이템팜 검색 1페이지 노출을 위한 <br> 콘텐츠 최적화 및 실행 중간 보고
+            </h1>
+            <div class="flex flex-wrap gap-6 text-sm font-bold text-slate-400">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500">발행일</span>
+                    <span class="text-white">2026. 03. 26</span>
+                </div>
+                <div class="flex items-center gap-2 border-l border-slate-700 pl-6">
+                    <span class="text-slate-500">부서</span>
+                    <span class="text-white">마케팅기획실 > 마케팅팀</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 핵심 요약 -->
+        <section class="p-8 md:p-12 border-b border-slate-100">
+            <div class="section-title">
+                <div class="status-dot bg-red-600"></div>
+                <h2>핵심 요약 (Executive Summary)</h2>
+            </div>
+            <div class="bg-slate-50 p-8 border border-slate-100 rounded-xl">
+                <p class="text-lg font-bold text-slate-800 leading-relaxed mb-4">
+                    '아이템팜' 키워드의 본질적 의미가 **'아이템 판매 및 거래'**임을 검색 AI(알고리즘)가 명확히 학습하도록 유도하는 키워드 정의(Definition) 전략을 중간 점검합니다.
+                </p>
+                <p class="text-slate-600 font-medium">
+                    1차 실행 결과 단순 기술 수정의 한계를 확인하고, 블로그 및 카테고리 최적화로 전략을 전환하여 <span class="highlight-blue">구글 3위 노출</span> 등 유의미한 중간 성과를 확보했습니다. 현재 1페이지 내 자사 콘텐츠 점유율 확대를 위한 후속 공정을 추진 중이며, **플랫폼개발실 협업 전략**(FAQ 스키마 기술 지원)을 병행하고 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 단계별 실행 현황 및 결과 -->
+        <section class="p-8 md:p-12 border-b border-slate-100">
+            <div class="section-title">
+                <div class="status-dot bg-blue-600"></div>
+                <h2>실행 공정별 중간 결과 (Fact Check)</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="text-sm">
+                    <thead>
+                        <tr>
+                            <th>단계</th>
+                            <th>주요 실행 내용</th>
+                            <th>도달 성과 (Result)</th>
+                            <th>현황</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-bold">
+                        <tr class="bg-slate-50/50">
+                            <td class="text-slate-500">1차 실행</td>
+                            <td class="text-slate-900">디스크립션 수정 / p태그 삽입</td>
+                            <td class="highlight-red">효과 미미 (전략 수정)</td>
+                            <td>종료</td>
+                        </tr>
+                        <tr>
+                            <td class="text-slate-500">1차 실행</td>
+                            <td class="text-slate-900">전략적 블로그 포스팅 진행</td>
+                            <td class="highlight-green">네이버 1페이지 내 블로그 노출 성공</td>
+                            <td>성과 유지</td>
+                        </tr>
+                        <tr class="bg-blue-50/30">
+                            <td class="text-slate-500">2차 실행</td>
+                            <td class="text-slate-900">아이템팜 전용 카테고리 추가</td>
+                            <td class="highlight-blue">구글 3위 노출 / 네이버 웹수집 완료</td>
+                            <td>진행 중</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 실측 노출 현황 분석 -->
+        <section class="p-8 md:p-12 border-b border-slate-100 bg-slate-50/30">
+            <div class="section-title">
+                <div class="status-dot bg-slate-900"></div>
+                <h2>포털별 현황 및 해결 과제 (Current Status)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-sm font-black text-slate-500 mb-4 uppercase tracking-tighter">Naver (검색어 혼선 해결 필요)</h3>
+                    <div class="screenshot-container shadow-sm">
+                        <img src="https://i.postimg.cc/nhMdKVHK/naver.png" alt="네이버 검색 결과 실측" class="screenshot-img">
+                    </div>
+                    <div class="p-4 bg-white border border-slate-100 rounded-lg text-xs font-bold leading-relaxed space-y-2">
+                        <p class="text-red-500">● 현재 '레알팜' 관련 결과가 1페이지 상단 노출 중</p>
+                        <p class="text-blue-600">● 자사 '아이템팜' 페이지 노출 확인 (웹수집 완료)</p>
+                        <p class="text-slate-600">→ 향후 리디렉션 검토를 통해 매니아 메인 URL 안착 유도</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-black text-slate-500 mb-4 uppercase tracking-tighter">Google (안정적 상단 안착)</h3>
+                    <div class="screenshot-container shadow-sm">
+                        <img src="https://i.postimg.cc/brJYY2hK/google.png" alt="구글 검색 결과 실측" class="screenshot-img">
+                    </div>
+                    <div class="p-4 bg-white border border-slate-100 rounded-lg text-xs font-bold leading-relaxed space-y-2">
+                        <p class="text-blue-600">● 카테고리 전략 공정 후 현재 3위 노출 성공</p>
+                        <p class="text-slate-600">● 1페이지 내 자사 영역 확보 및 점유율 강화 단계</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GSC 데이터 -->
+        <section class="p-8 md:p-12 border-b border-slate-100">
+            <div class="section-title">
+                <div class="status-dot bg-amber-500"></div>
+                <h2>GSC 데이터</h2>
+            </div>
+            <p class="text-xs font-black text-slate-400 mb-6 uppercase tracking-wider">Analysis Period: 2026. 03. 17 - 2026. 03. 23 (7 Days)</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-6 bg-slate-50 rounded-xl text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 mb-1 uppercase">Avg. Position</p>
+                    <p class="text-2xl font-black text-slate-900">3.6</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 mb-1 uppercase">Impressions</p>
+                    <p class="text-2xl font-black text-slate-900">1,050</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 mb-1 uppercase">Clicks</p>
+                    <p class="text-2xl font-black text-slate-900">21</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl text-center border border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 mb-1 uppercase">Avg. CTR</p>
+                    <p class="text-2xl font-black text-green-600">2%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 마케팅팀 실행 공정 -->
+        <section class="p-8 md:p-12 border-b border-slate-100">
+            <div class="section-title">
+                <div class="status-dot bg-blue-600"></div>
+                <h2>마케팅팀 실행 공정 (Execution)</h2>
+            </div>
+            <div class="space-y-6">
+                <div class="flex gap-6 items-start">
+                    <div class="bg-blue-600 text-white w-8 h-8 rounded flex-shrink-0 flex items-center justify-center font-black">1</div>
+                    <div>
+                        <h3 class="text-lg font-black mb-2">검색 AI 인식을 위한 브랜드 의미 최적화</h3>
+                        <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                            '아이템팜'이 **아이템 거래 및 판매 서비스**임을 검색 알고리즘이 학습하도록 관련 키워드 밀도를 재구성했습니다. 이는 단순 노출을 넘어 키워드의 정체성을 자사 서비스로 귀속시키는 공정입니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="bg-slate-900 text-white w-8 h-8 rounded flex-shrink-0 flex items-center justify-center font-black">2</div>
+                    <div>
+                        <h3 class="text-lg font-black mb-2">시맨틱 FAQ 콘텐츠 기획 및 기술 지원 요청</h3>
+                        <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                            아이템 판매 방법, 정산 절차 등을 FAQ로 구성하여 **'아이템팜=판매 목적지'**라는 의미적 연관성을 AI에게 각인시키고자 합니다. 실제 적용은 **플랫폼개발실**의 지원을 통해 진행할 예정입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 향후 로드맵 -->
+        <section class="p-8 md:p-12">
+            <div class="section-title">
+                <div class="status-dot bg-green-600"></div>
+                <h2>향후 추진 로드맵 및 도달 가능성</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="border border-slate-200 p-6 rounded-xl bg-white shadow-sm border-t-4 border-t-blue-600">
+                    <h4 class="font-black text-blue-600 mb-2 uppercase text-xs">Phase 01: Semantic Training</h4>
+                    <p class="text-sm font-bold text-slate-800 mb-2">FAQ 수정을 통한 브랜드 의미론적 강화 [진행 예정]</p>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">
+                        검색 AI가 '아이템팜'을 **아이템 판매를 위한 서비스**로 정확히 정의하도록 FAQ 콘텐츠를 보강하여 브랜드 주권을 확립합니다. 분산된 페이지 노출을 통합하는 방안을 **플랫폼개발실**과 협의하여 추진하겠습니다.
+                    </p>
+                </div>
+                <div class="border border-slate-200 p-6 rounded-xl bg-white shadow-sm border-t-4 border-t-green-600">
+                    <h4 class="font-black text-blue-600 mb-2 uppercase text-xs">Phase 02: Dominance</h4>
+                    <p class="text-sm font-bold text-slate-800 mb-2">1페이지 내 자사 브랜드 점유 완성</p>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">
+                        학습된 브랜드 정의를 바탕으로 메인 페이지, 블로그, FAQ 콘텐츠가 1페이지 내 자사 영역을 견고하게 점유하도록 실현하겠습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="p-8 bg-white border-t border-slate-100 text-center">
+            <p class="text-[10px] text-slate-400 font-black tracking-[0.8em] uppercase">마케팅기획실 > 마케팅팀 | SEO Strategy Unit</p>
+        </footer>
+    </div>
+
+</body>
+</html>

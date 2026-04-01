@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>키워드 모니터링 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0f18;--card:#161925;--border:#252838;
+  --text:#dde1f0;--muted:#6b7094;
+  --naver:#03C75A;--google:#4285F4;--exp:#4ECDC4;--not:#FF6B6B;
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;padding:24px;font-size:14px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.header h1{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--naver),var(--google));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header .meta{font-size:13px;color:#a0a4bc;text-align:right;line-height:1.8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .lbl{font-size:13px;color:#c8cce0;margin-bottom:6px}
+.stat .val{font-size:26px;font-weight:900;line-height:1}
+.stat .sub{font-size:13px;color:#c8cce0;margin-top:4px}
+.naver{color:var(--naver)}.google{color:var(--google)}.exp{color:var(--exp)}.white{color:var(--text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid1{margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card-title{font-size:13px;font-weight:700;color:#c0c4d8;letter-spacing:.04em;margin-bottom:12px}
+.chart-box{position:relative;height:220px}
+.chart-box.md{height:260px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{padding:5px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:#a0a4bc;font-size:12px;cursor:pointer;font-family:inherit}
+.tab.active{background:var(--border);color:var(--text);font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 키워드 모니터링 대시보드</h1>
+  <div class="meta">
+    기간: 전체 &nbsp;|&nbsp; 기준일: 2026-04-01<br>
+    업데이트: 2026-04-01 12:35
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="lbl">대상 키워드 수</div>
+    <div class="val white">179<span style="font-size:14px;color:var(--muted)"> 개</span></div>
+  </div>
+  <div class="stat">
+    <div class="lbl">네이버 노출률 <span style="font-size:10px">(2026-04-01 기준)</span></div>
+    <div class="val naver">51.4<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 92개 · 미노출 87개</div>
+  </div>
+  <div class="stat">
+    <div class="lbl">구글 노출률 <span style="font-size:10px">(2026-04-01 기준)</span></div>
+    <div class="val google">94.4<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 169개 · 미노출 10개</div>
+  </div>
+  <div class="stat">
+    <div class="lbl">전체 노출률 <span style="font-size:10px">(네이버+구글)</span></div>
+    <div class="val exp">72.9<span style="font-size:14px">%</span></div>
+    <div class="sub">기준일: 2026-04-01</div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">노출 비율 — 네이버 vs 구글 (%)</div>
+    <div class="chart-box"><canvas id="pieChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">순위별 키워드 수 — 광고제외 (2026-04-01 기준)</div>
+    <div class="chart-box"><canvas id="rankBar"></canvas></div>
+  </div>
+</div>
+
+<div class="grid1">
+  <div class="card">
+    <div class="card-title">날짜별 노출 / 미노출 비교</div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchDaily('naver',this)">🟢 네이버</button>
+      <button class="tab" onclick="switchDaily('google',this)">🔵 구글</button>
+    </div>
+    <div class="chart-box md"><canvas id="dailyBar"></canvas></div>
+  </div>
+</div>
+
+<div class="grid1">
+  <div class="card">
+    <div class="card-title">키워드별 순위 변화 — 광고제외 · 상위 10개</div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('naver',this)">🟢 네이버</button>
+      <button class="tab" onclick="switchTab('google',this)">🔵 구글</button>
+    </div>
+    <div class="chart-box md"><canvas id="rankLine"></canvas></div>
+  </div>
+</div>
+
+<script>
+const sc = { x:{ticks:{color:'#c0c4d8',font:{size:12}},grid:{color:'#1e2130'}}, y:{ticks:{color:'#c0c4d8',font:{size:12}},grid:{color:'#1e2130'}} };
+const lg = { labels:{color:'#c0c4d8',font:{size:12},boxWidth:12,padding:8} };
+
+// 노출 비율 도넛
+new Chart(document.getElementById('pieChart'),{
+  type:'doughnut',
+  data:{
+    labels:['네이버 노출','네이버 미노출','구글 노출','구글 미노출'],
+    datasets:[{
+      data:[51.4,48.6,94.4,5.6],
+      backgroundColor:['#03C75A88','#03C75A22','#4285F488','#4285F422'],
+      borderWidth:0
+    }]
+  },
+  options:{cutout:'60%',plugins:{legend:{position:'right',labels:{color:'#e8eaf0',font:{size:12,weight:'500'},boxWidth:13}},tooltip:{callbacks:{label:ctx=>ctx.label+': '+ctx.raw+'%'}}}}
+});
+
+// 순위별 막대
+new Chart(document.getElementById('rankBar'),{
+  type:'bar',
+  data:{
+    labels:["1\uc704", "2~3\uc704", "4~5\uc704", "6~10\uc704", "\ubbf8\ub178\ucd9c"],
+    datasets:[
+      {label:'네이버',data:[67, 11, 8, 6, 87],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
+      {label:'구글',data:[99, 42, 22, 6, 10],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{...sc,y:{...sc.y,beginAtZero:true,ticks:{...sc.y.ticks,stepSize:1}}}}
+});
+
+// 날짜별 노출/미노출 탭 전환
+const dailyData = {
+  naver: {
+    labels: ["2026-03-31", "2026-04-01"],
+    datasets: [
+      {label:'노출',  data:[63, 92], backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
+      {label:'미노출',data:[72, 87], backgroundColor:'#03C75A22',borderColor:'#03C75A77',borderWidth:1}
+    ]
+  },
+  google: {
+    labels: ["2026-03-31", "2026-04-01"],
+    datasets: [
+      {label:'노출',  data:[126, 169], backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1},
+      {label:'미노출',data:[9, 10], backgroundColor:'#4285F422',borderColor:'#4285F477',borderWidth:1}
+    ]
+  }
+};
+const dailyOpts = {responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{...sc,y:{...sc.y,beginAtZero:true,ticks:{...sc.y.ticks,stepSize:1}}}};
+let dailyChart = new Chart(document.getElementById('dailyBar'),{type:'bar',data:dailyData.naver,options:dailyOpts});
+
+function switchDaily(engine, el) {
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  dailyChart.destroy();
+  dailyChart = new Chart(document.getElementById('dailyBar'),{type:'bar',data:dailyData[engine],options:dailyOpts});
+}
+
+// 키워드별 순위 변화 (탭)
+const naverDs  = [{"label": "\uc194\uc778\ucc48\ud2b8 \ub2e4\uc774\uc544\uac70\ub798", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [10, 3]}, {"label": "\uc544\uc774\ud15c \uac70\ub798 \uc0ac\uc774\ud2b8", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [10, 2]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544 \uac70\ub798\ubc29\ubc95", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544 \uc218\uc218\ub8cc", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\ub9ac\ub2c8\uc9c0\ud074\ub798\uc2dd \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [4, 4]}, {"label": "\ub9ac\ub2c8\uc9c0M \uacc4\uc815\uac70\ub798", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\uc6282 \uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\ub9ac\ub2c8\uc9c0\ud074\ub798\uc2dd \uc544\ub370\ub098 \uc2dc\uc138", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, null]}];
+const googleDs = [{"label": "\uc194\uc778\ucc48\ud2b8 \ub2e4\uc774\uc544\uac70\ub798", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 4]}, {"label": "\uc544\uc774\ud15c \uac70\ub798 \uc0ac\uc774\ud2b8", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [4, 7]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544 \uac70\ub798\ubc29\ubc95", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544 \uc218\uc218\ub8cc", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\ub9ac\ub2c8\uc9c0\ud074\ub798\uc2dd \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 2]}, {"label": "\ub9ac\ub2c8\uc9c0M \uacc4\uc815\uac70\ub798", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [3, 3]}, {"label": "\uc544\uc774\uc6282 \uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1]}, {"label": "\ub9ac\ub2c8\uc9c0\ud074\ub798\uc2dd \uc544\ub370\ub098 \uc2dc\uc138", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [3, 4]}];
+const lineCtx  = document.getElementById('rankLine');
+const lineOpts = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:lg},
+  scales:{
+    x:sc.x,
+    y:{reverse:true,min:1,max:10,ticks:{color:'#c0c4d8',font:{size:12},stepSize:1,callback:v=>v+'위'},grid:{color:'#1e2130'}}
+  }
+};
+
+let rankChart = new Chart(lineCtx,{type:'line',data:{labels:["2026-03-31", "2026-04-01"],datasets:naverDs},options:lineOpts});
+
+function switchTab(engine, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  rankChart.destroy();
+  rankChart = new Chart(lineCtx,{
+    type:'line',
+    data:{labels:["2026-03-31", "2026-04-01"],datasets:engine==='naver'?naverDs:googleDs},
+    options:lineOpts
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>키워드 모니터링 월별 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d0f18;--card:#161925;--border:#252838;--text:#dde1f0;--muted:#a0a4bc;--naver:#03C75A;--google:#4285F4}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;padding:24px;font-size:14px}
+.top-tabs{display:flex;gap:8px;margin-bottom:16px}
+.top-tab{padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;cursor:pointer;text-decoration:none;font-family:'Noto Sans KR',sans-serif;transition:all .2s}
+.top-tab:hover{color:var(--text);border-color:#4a4d62}
+.top-tab.active{background:#252838;color:var(--text);border-color:#4a4d62;font-weight:700;cursor:default}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.header h1{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--naver),var(--google));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header .meta{font-size:13px;color:var(--muted);text-align:right;line-height:1.8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
+.stat .val{font-size:26px;font-weight:900;line-height:1}
+.stat .sub{font-size:12px;color:var(--muted);margin-top:4px}
+.naver{color:var(--naver)}.google{color:var(--google)}.white{color:var(--text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid1{margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card-title{font-size:13px;font-weight:700;color:#c0c4d8;margin-bottom:12px}
+.chart-box{position:relative;height:220px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 10px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500}
+td{padding:8px 10px;border-bottom:1px solid #1e2130}
+tr:last-child td{border-bottom:none}
+.kw-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;margin:3px}
+.kw-tag.new{background:#03C75A22;color:#03C75A;border:1px solid #03C75A44}
+.kw-tag.lost{background:#FF6B6B22;color:#FF6B6B;border:1px solid #FF6B6B44}
+.kw-wrap{line-height:2}
+</style>
+</head>
+<body>
+
+<div class="top-tabs">
+  <a class="top-tab" href="https://www.notion.so/334d8bd8363880ebb6d9e9f6ba981f4f?v=334d8bd8363880cd8f32000cf5b20254" target="_blank">📋 키워드 리스트</a>
+  <a class="top-tab" href="https://www.notion.so/334d8bd8363880abb332f0a508a142ae?v=334d8bd8363880d5a16e000cedd67056" target="_blank">📊 모니터링 결과</a>
+  <a class="top-tab" href="index.html">📅 일별 대시보드</a>
+  <span class="top-tab active">📆 월별 대시보드</span>
+</div>
+
+<div class="header">
+  <h1>📆 2026년 4월 키워드 모니터링 리포트</h1>
+  <div class="meta">
+    수집 기간: 2026-04-01 ~ 2026-04-17 (12일)<br>
+    업데이트: 2026-04-17 14:23
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="lbl">대상 키워드 수</div>
+    <div class="val white">180<span style="font-size:14px;color:var(--muted)"> 개</span></div>
+  </div>
+  <div class="stat">
+    <div class="lbl">네이버 월 평균 노출률</div>
+    <div class="val naver">55.5<span style="font-size:14px">%</span></div>
+    <div class="sub">월 평균 순위 2.1위</div>
+  </div>
+  <div class="stat">
+    <div class="lbl">구글 월 평균 노출률</div>
+    <div class="val google">90.8<span style="font-size:14px">%</span></div>
+    <div class="sub">월 평균 순위 2.0위</div>
+  </div>
+  <div class="stat">
+    <div class="lbl">신규 노출 / 이탈</div>
+    <div class="val white"><span style="color:#4ECDC4">+13</span> / <span style="color:#FF6B6B">-2</span></div>
+    <div class="sub">네이버 기준</div>
+  </div>
+</div>
+
+<div class="grid1">
+  <div class="card">
+    <div class="card-title">주차별 노출률 추이 — 네이버 vs 구글 (%)</div>
+    <div class="chart-box"><canvas id="weeklyChart"></canvas></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">📈 순위 상승 TOP 10 (네이버 · 광고제외)</div>
+    <table>
+      <tr><th>키워드</th><th>월초</th><th>월말</th><th>변화</th></tr>
+      <tr><td>www.itemmania.com www.itembay.com</td><td>5위</td><td>2위</td><td style="color:#4ECDC4">▲ 3</td></tr><tr><td>로스트아크 골드 시세</td><td>6위</td><td>3위</td><td style="color:#4ECDC4">▲ 3</td></tr><tr><td>디아블로2 거래사이트</td><td>3위</td><td>1위</td><td style="color:#4ECDC4">▲ 2</td></tr><tr><td>아이템팜</td><td>6위</td><td>4위</td><td style="color:#4ECDC4">▲ 2</td></tr><tr><td>게임매니아</td><td>9위</td><td>8위</td><td style="color:#4ECDC4">▲ 1</td></tr><tr><td>디아2 거래사이트</td><td>2위</td><td>1위</td><td style="color:#4ECDC4">▲ 1</td></tr><tr><td>주소매니아</td><td>2위</td><td>1위</td><td style="color:#4ECDC4">▲ 1</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">📉 순위 하락 TOP 10 (네이버 · 광고제외)</div>
+    <table>
+      <tr><th>키워드</th><th>월초</th><th>월말</th><th>변화</th></tr>
+      <tr><td>게임거래사이트</td><td>2위</td><td>4위</td><td style="color:#FF6B6B">▼ 2</td></tr><tr><td>디아블로4 거래</td><td>2위</td><td>4위</td><td style="color:#FF6B6B">▼ 2</td></tr><tr><td>리니지M 아이템 거래</td><td>1위</td><td>3위</td><td style="color:#FF6B6B">▼ 2</td></tr><tr><td>명일방주 계정</td><td>1위</td><td>3위</td><td style="color:#FF6B6B">▼ 2</td></tr><tr><td>아이템 거래 사이트</td><td>2위</td><td>4위</td><td style="color:#FF6B6B">▼ 2</td></tr><tr><td>계정 거래</td><td>4위</td><td>5위</td><td style="color:#FF6B6B">▼ 1</td></tr><tr><td>계정거래</td><td>4위</td><td>5위</td><td style="color:#FF6B6B">▼ 1</td></tr><tr><td>계정거래사이트</td><td>4위</td><td>5위</td><td style="color:#FF6B6B">▼ 1</td></tr><tr><td>메이플 계정 거래</td><td>9위</td><td>10위</td><td style="color:#FF6B6B">▼ 1</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">🆕 신규 노출 키워드 (네이버)</div>
+    <div class="kw-wrap"><span class="kw-tag new">게임아이템 거래</span> <span class="kw-tag new">리니지클래식 계정거래</span> <span class="kw-tag new">리니지 아덴시세</span> <span class="kw-tag new">아이템거래</span> <span class="kw-tag new">로아 골드 시세</span> <span class="kw-tag new">리니지클래식 아데나 시세</span> <span class="kw-tag new">아이템 거래</span> <span class="kw-tag new">아이온2 큐나 가격</span> <span class="kw-tag new">컴프야 계정 구매</span> <span class="kw-tag new">리니지클래식 아이템시세</span> <span class="kw-tag new">아이템팜 사이트</span> <span class="kw-tag new">디아2 아이템</span> <span class="kw-tag new">리니지 클래식 아데나 시세</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠️ 이탈 키워드 (네이버)</div>
+    <div class="kw-wrap"><span class="kw-tag lost">솔인챈트 다이아</span> <span class="kw-tag lost">리니지 클래식 아이템</span></div>
+  </div>
+</div>
+
+<script>
+const sc = { x:{ticks:{color:'#c0c4d8',font:{size:12}},grid:{color:'#1e2130'}}, y:{ticks:{color:'#c0c4d8',font:{size:12}},grid:{color:'#1e2130'}} };
+const lg = { labels:{color:'#c0c4d8',font:{size:12},boxWidth:12,padding:8} };
+
+new Chart(document.getElementById('weeklyChart'),{
+  type:'line',
+  data:{
+    labels:["1\uc8fc\ucc28", "2\uc8fc\ucc28", "3\uc8fc\ucc28", "4\uc8fc\ucc28"],
+    datasets:[
+      {label:'네이버',data:[54.2, 56.1, 56.1, 0.0],borderColor:'#03C75A',backgroundColor:'#03C75A22',tension:0.4,fill:true,pointRadius:5},
+      {label:'구글',  data:[92.9, 90.1, 89.3, 0.0],borderColor:'#4285F4',backgroundColor:'#4285F422',tension:0.4,fill:true,pointRadius:5}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:lg},
+    scales:{...sc,y:{...sc.y,min:0,max:100,ticks:{...sc.y.ticks,callback:v=>v+'%'}}}
+  }
+});
+</script>
+</body>
+</html>

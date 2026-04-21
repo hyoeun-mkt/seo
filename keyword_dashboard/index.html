@@ -48,8 +48,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 <div class="header">
   <h1>📊 키워드 모니터링 대시보드</h1>
   <div class="meta">
-    기간: 전체 &nbsp;|&nbsp; 기준일: 2026-04-01<br>
-    업데이트: 2026-04-21 09:47
+    기간: 전체 &nbsp;|&nbsp; 기준일: 2026-04-21<br>
+    업데이트: 2026-04-21 10:05
   </div>
 </div>
 
@@ -59,19 +59,19 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="val white">135<span style="font-size:14px;color:var(--muted)"> 개</span></div>
   </div>
   <div class="stat">
-    <div class="lbl">네이버 노출률 <span style="font-size:10px">(2026-04-01 기준)</span></div>
-    <div class="val naver">53.3<span style="font-size:14px">%</span></div>
-    <div class="sub">노출 8개 · 미노출 7개</div>
+    <div class="lbl">네이버 노출률 <span style="font-size:10px">(2026-04-21 기준)</span></div>
+    <div class="val naver">0.0<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 0개 · 미노출 0개</div>
   </div>
   <div class="stat">
-    <div class="lbl">구글 노출률 <span style="font-size:10px">(2026-04-01 기준)</span></div>
-    <div class="val google">93.8<span style="font-size:14px">%</span></div>
-    <div class="sub">노출 15개 · 미노출 1개</div>
+    <div class="lbl">구글 노출률 <span style="font-size:10px">(2026-04-21 기준)</span></div>
+    <div class="val google">0.0<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 0개 · 미노출 0개</div>
   </div>
   <div class="stat">
     <div class="lbl">전체 노출률 <span style="font-size:10px">(네이버+구글)</span></div>
-    <div class="val exp">74.2<span style="font-size:14px">%</span></div>
-    <div class="sub">기준일: 2026-04-01</div>
+    <div class="val exp">0<span style="font-size:14px">%</span></div>
+    <div class="sub">기준일: 2026-04-21</div>
   </div>
 </div>
 
@@ -81,7 +81,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="chart-box"><canvas id="pieChart"></canvas></div>
   </div>
   <div class="card">
-    <div class="card-title">순위별 키워드 수 — 광고제외 (2026-04-01 기준)</div>
+    <div class="card-title">순위별 키워드 수 — 광고제외 (2026-04-21 기준)</div>
     <div class="chart-box"><canvas id="rankBar"></canvas></div>
   </div>
 </div>
@@ -118,7 +118,7 @@ new Chart(document.getElementById('pieChart'),{
   data:{
     labels:['네이버 노출','네이버 미노출','구글 노출','구글 미노출'],
     datasets:[{
-      data:[53.3,46.7,93.8,6.2],
+      data:[0.0,0.0,0.0,0.0],
       backgroundColor:['#03C75A','#03C75A33','#4285F4','#4285F433'],
       borderWidth:0
     }]
@@ -132,8 +132,8 @@ new Chart(document.getElementById('rankBar'),{
   data:{
     labels:["1\uc704", "2~3\uc704", "4~5\uc704", "6~10\uc704", "\ubbf8\ub178\ucd9c"],
     datasets:[
-      {label:'네이버',data:[6, 1, 0, 1, 7],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
-      {label:'구글',data:[8, 3, 2, 2, 1],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1}
+      {label:'네이버',data:[0, 0, 0, 0, 0],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
+      {label:'구글',data:[0, 0, 0, 0, 0],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1}
     ]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{...sc,y:{...sc.y,beginAtZero:true,ticks:{...sc.y.ticks,stepSize:1}}}}

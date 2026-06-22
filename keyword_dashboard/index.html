@@ -45,8 +45,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 <div class="header">
   <h1>📊 키워드 모니터링 대시보드</h1>
   <div class="meta">
-    기간: 2026-05-21 ~ 2026-06-19 &nbsp;|&nbsp; 기준일: 2026-06-19<br>
-    업데이트: 2026-06-19 09:53
+    기간: 2026-05-24 ~ 2026-06-22 &nbsp;|&nbsp; 기준일: 2026-06-22<br>
+    업데이트: 2026-06-22 09:54
   </div>
 </div>
 
@@ -56,19 +56,19 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="val white">232<span style="font-size:14px;color:var(--muted)"> 개</span></div>
   </div>
   <div class="stat">
-    <div class="lbl">네이버 노출률 <span style="font-size:10px">(2026-06-19 기준)</span></div>
-    <div class="val naver">45.3<span style="font-size:14px">%</span></div>
-    <div class="sub">노출 105개 · 미노출 127개</div>
+    <div class="lbl">네이버 노출률 <span style="font-size:10px">(2026-06-22 기준)</span></div>
+    <div class="val naver">52.6<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 122개 · 미노출 110개</div>
   </div>
   <div class="stat">
-    <div class="lbl">구글 노출률 <span style="font-size:10px">(2026-06-19 기준)</span></div>
-    <div class="val google">79.3<span style="font-size:14px">%</span></div>
-    <div class="sub">노출 184개 · 미노출 48개</div>
+    <div class="lbl">구글 노출률 <span style="font-size:10px">(2026-06-22 기준)</span></div>
+    <div class="val google">81.0<span style="font-size:14px">%</span></div>
+    <div class="sub">노출 188개 · 미노출 44개</div>
   </div>
   <div class="stat">
     <div class="lbl">전체 노출률 <span style="font-size:10px">(네이버+구글)</span></div>
-    <div class="val exp">62.3<span style="font-size:14px">%</span></div>
-    <div class="sub">기준일: 2026-06-19</div>
+    <div class="val exp">66.8<span style="font-size:14px">%</span></div>
+    <div class="sub">기준일: 2026-06-22</div>
   </div>
 </div>
 
@@ -78,7 +78,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="chart-box"><canvas id="pieChart"></canvas></div>
   </div>
   <div class="card">
-    <div class="card-title">순위별 키워드 수 — 광고제외 (2026-06-19 기준)</div>
+    <div class="card-title">순위별 키워드 수 — 광고제외 (2026-06-22 기준)</div>
     <div class="chart-box"><canvas id="rankBar"></canvas></div>
   </div>
 </div>
@@ -113,7 +113,7 @@ new Chart(document.getElementById('pieChart'),{
   type:'doughnut',
   data:{
     labels:['네이버 노출','네이버 미노출','구글 노출','구글 미노출'],
-    datasets:[{data:[45.3,54.7,79.3,20.7],backgroundColor:['#03C75A88','#03C75A22','#4285F488','#4285F422'],borderWidth:0}]
+    datasets:[{data:[52.6,47.4,81.0,19.0],backgroundColor:['#03C75A88','#03C75A22','#4285F488','#4285F422'],borderWidth:0}]
   },
   options:{cutout:'60%',plugins:{legend:{position:'right',labels:{color:'#e8eaf0',font:{size:12,weight:'500'},boxWidth:13}},tooltip:{callbacks:{label:ctx=>ctx.label+': '+ctx.raw+'%'}}}}
 });
@@ -123,27 +123,27 @@ new Chart(document.getElementById('rankBar'),{
   data:{
     labels:["1\uc704", "2~3\uc704", "4~5\uc704", "6~10\uc704", "\ubbf8\ub178\ucd9c"],
     datasets:[
-      {label:'네이버',data:[33, 29, 15, 28, 127],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
-      {label:'구글',data:[109, 55, 7, 13, 48],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1}
+      {label:'네이버',data:[67, 28, 16, 11, 110],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},
+      {label:'구글',data:[109, 46, 20, 13, 44],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1}
     ]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{...sc,y:{...sc.y,beginAtZero:true,ticks:{...sc.y.ticks,stepSize:1}}}}
 });
 
 const dailyData = {
-  naver:{labels:["2026-05-21", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19"],datasets:[{label:'노출',data:[129, 131, 125, 126, 130, 136, 134, 128, 127, 128, 129, 132, 125, 129, 137, 127, 129, 126, 105],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},{label:'미노출',data:[99, 97, 103, 102, 98, 92, 94, 100, 101, 100, 103, 100, 107, 103, 95, 105, 103, 106, 127],backgroundColor:'#03C75A22',borderColor:'#03C75A77',borderWidth:1}]},
-  google:{labels:["2026-05-21", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19"],datasets:[{label:'노출',data:[185, 189, 185, 188, 188, 186, 186, 185, 184, 185, 187, 189, 188, 189, 189, 190, 189, 186, 184],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1},{label:'미노출',data:[43, 39, 41, 40, 40, 42, 42, 43, 44, 43, 45, 43, 44, 43, 42, 42, 43, 46, 48],backgroundColor:'#4285F422',borderColor:'#4285F477',borderWidth:1}]}
+  naver:{labels:["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22"],datasets:[{label:'노출',data:[131, 125, 126, 130, 136, 134, 128, 127, 128, 129, 132, 125, 129, 137, 127, 129, 126, 105, 122],backgroundColor:'#03C75A88',borderColor:'#03C75A',borderWidth:1},{label:'미노출',data:[97, 103, 102, 98, 92, 94, 100, 101, 100, 103, 100, 107, 103, 95, 105, 103, 106, 127, 110],backgroundColor:'#03C75A22',borderColor:'#03C75A77',borderWidth:1}]},
+  google:{labels:["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22"],datasets:[{label:'노출',data:[189, 185, 188, 188, 186, 186, 185, 184, 185, 187, 189, 188, 189, 189, 190, 189, 186, 184, 188],backgroundColor:'#4285F488',borderColor:'#4285F4',borderWidth:1},{label:'미노출',data:[39, 41, 40, 40, 42, 42, 43, 44, 43, 45, 43, 44, 43, 42, 42, 43, 46, 48, 44],backgroundColor:'#4285F422',borderColor:'#4285F477',borderWidth:1}]}
 };
 const dailyOpts = {responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{...sc,y:{...sc.y,beginAtZero:true,ticks:{...sc.y.ticks,stepSize:1}}}};
 let dailyChart = new Chart(document.getElementById('dailyBar'),{type:'bar',data:dailyData.naver,options:dailyOpts});
 function switchDaily(engine,el){document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');dailyChart.destroy();dailyChart=new Chart(document.getElementById('dailyBar'),{type:'bar',data:dailyData[engine],options:dailyOpts});}
 
-const naverDs=[{"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 10, 1, 2, 3, 2, 2, 2, 9, 2, 3, 2, 1, 1, 3, 3, 3, 10]}, {"label": "itemmania", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud0ec\ub9e4\ub2c8\uc544", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 3, 3, 3, 8]}, {"label": "dkdlxpaaosldk", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 10, 1, 2, 3, 2, 2, 2, 9, 2, 3, 3, 1, 1, 3, 3, 3, 8]}, {"label": "\uacc4\uc815\uac70\ub798", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [4, 3, 3, 3, 3, 3, 3, 4, 4, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3]}, {"label": "\uc544\uc774\ud15c\uba54\ub2c8\uc544", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [3, 4, 3, 1, 1, 2, 2, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e8\uc774\u314f", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8]}, {"label": "\uc544\uc774\ud14c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8]}, {"label": "\ub514\uc5442 \uac70\ub798\uc0ac\uc774\ud2b8", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [5, 5, 6, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5]}];
-const googleDs=[{"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "itemmania", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud0ec\ub9e4\ub2c8\uc544", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "dkdlxpaaosldk", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uacc4\uc815\uac70\ub798", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\uba54\ub2c8\uc544", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 7, 1, 4, 3, 1, 1, 1, 1, 6, 1, 3, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e8\uc774\u314f", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud14c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\ub514\uc5442 \uac70\ub798\uc0ac\uc774\ud2b8", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 7, 8, 8, 8, 7, 7, 3, 7, 6, 3, 1, 2, 1, 1, 1, 1, 1, 1]}];
+const naverDs=[{"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 10, 1, 2, 3, 2, 2, 2, 9, 2, 3, 2, 1, 1, 3, 3, 3, 10, 1]}, {"label": "itemmania", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud0ec\ub9e4\ub2c8\uc544", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 3, 3, 3, 8, 1]}, {"label": "dkdlxpaaosldk", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 10, 1, 2, 3, 2, 2, 2, 9, 2, 3, 3, 1, 1, 3, 3, 3, 8, 1]}, {"label": "\uacc4\uc815\uac70\ub798", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [3, 3, 3, 3, 3, 3, 4, 4, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 5]}, {"label": "\uc544\uc774\ud15c\uba54\ub2c8\uc544", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8, 1]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [4, 3, 1, 1, 2, 2, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e8\uc774\u314f", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8, 1]}, {"label": "\uc544\uc774\ud14c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [2, 10, 1, 1, 2, 2, 2, 2, 9, 2, 3, 3, 1, 1, 1, 3, 3, 8, 1]}, {"label": "\ub514\uc5442 \uac70\ub798\uc0ac\uc774\ud2b8", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [5, 6, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 4]}];
+const googleDs=[{"label": "\uc544\uc774\ud15c\ub9e4\ub2c8\uc544", "borderColor": "#4ECDC4", "backgroundColor": "#4ECDC433", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "itemmania", "borderColor": "#FF6B6B", "backgroundColor": "#FF6B6B33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud0ec\ub9e4\ub2c8\uc544", "borderColor": "#45B7D1", "backgroundColor": "#45B7D133", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "dkdlxpaaosldk", "borderColor": "#FFA07A", "backgroundColor": "#FFA07A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uacc4\uc815\uac70\ub798", "borderColor": "#98D8C8", "backgroundColor": "#98D8C833", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\uba54\ub2c8\uc544", "borderColor": "#F7DC6F", "backgroundColor": "#F7DC6F33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\ub514\uc5442 \uac70\ub798", "borderColor": "#BB8FCE", "backgroundColor": "#BB8FCE33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [7, 1, 4, 3, 1, 1, 1, 1, 6, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud15c\ub9e8\uc774\u314f", "borderColor": "#85C1E9", "backgroundColor": "#85C1E933", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\uc544\uc774\ud14c\ub9e4\ub2c8\uc544", "borderColor": "#F1948A", "backgroundColor": "#F1948A33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {"label": "\ub514\uc5442 \uac70\ub798\uc0ac\uc774\ud2b8", "borderColor": "#82E0AA", "backgroundColor": "#82E0AA33", "tension": 0.4, "fill": false, "spanGaps": true, "pointRadius": 4, "data": [7, 8, 8, 8, 7, 7, 3, 7, 6, 3, 1, 2, 1, 1, 1, 1, 1, 1, 4]}];
 const lineCtx=document.getElementById('rankLine');
 const lineOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{x:sc.x,y:{reverse:true,min:1,max:10,ticks:{color:'#c0c4d8',font:{size:12},stepSize:1,callback:v=>v+'위'},grid:{color:'#1e2130'}}}};
-let rankChart=new Chart(lineCtx,{type:'line',data:{labels:["2026-05-21", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19"],datasets:naverDs},options:lineOpts});
-function switchTab(engine,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');rankChart.destroy();rankChart=new Chart(lineCtx,{type:'line',data:{labels:["2026-05-21", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19"],datasets:engine==='naver'?naverDs:googleDs},options:lineOpts});}
+let rankChart=new Chart(lineCtx,{type:'line',data:{labels:["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22"],datasets:naverDs},options:lineOpts});
+function switchTab(engine,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');rankChart.destroy();rankChart=new Chart(lineCtx,{type:'line',data:{labels:["2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22"],datasets:engine==='naver'?naverDs:googleDs},options:lineOpts});}
 </script>
 </body>
 </html>

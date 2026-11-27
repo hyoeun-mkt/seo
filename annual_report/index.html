@@ -204,4 +204,23 @@ draw('annual',labels,[{name:'클릭수',axisLabel:'클릭수',values:D.metrics.m
 function drawMix(){let n=document.getElementById('exposuremix');if(!n)return;let W=1100,H=330,L=65,R=25,T=25,B=45,P=W-L-R,PH=H-T-B;let out='<div class="chart-legend"><span><i class="legend-bar" style="background:#2e64aa"></i>대표 브랜드 3개</span><span><i class="legend-bar" style="background:#9cbad8"></i>나머지 검색어</span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="월별 노출 비중 100퍼센트 누적 막대">';for(let j=0;j<=4;j++){let y=T+j*PH/4;out+='<path d="M'+L+' '+y+'H'+(W-R)+'" stroke="#e0e8f1"/><text x="'+(L-10)+'" y="'+(y+5)+'" font-size="12" text-anchor="end" fill="#344b64">'+(100-j*25)+'%</text>';}D.months.forEach((m,i)=>{let total=D.metrics[i][1],brand=D.brand3_impressions[i],other=total-brand,bp=brand/total,op=1-bp,x=L+(i+.5)*P/13,bw=48,base=T+PH;out+='<rect x="'+(x-bw/2)+'" y="'+(base-bp*PH)+'" width="'+bw+'" height="'+bp*PH+'" fill="#2e64aa"><title>'+m+' 대표 브랜드 '+nfmt(brand)+'회 / 비중 '+nfmt(bp*100,1)+'%</title></rect><rect x="'+(x-bw/2)+'" y="'+T+'" width="'+bw+'" height="'+op*PH+'" fill="#9cbad8"><title>'+m+' 나머지 '+nfmt(other)+'회 / 비중 '+nfmt(op*100,1)+'%</title></rect><text x="'+x+'" y="'+(base-bp*PH/2+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="white">'+nfmt(bp*100,1)+'%</text><text x="'+x+'" y="'+(T+op*PH/2+5)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#193750">'+nfmt(op*100,1)+'%</text><text x="'+x+'" y="'+(H-17)+'" text-anchor="middle" font-size="12" fill="#344b64">'+labels[i]+'</text>';});n.innerHTML=out+'</svg>';}
 drawMix();
 function syncHeader(){document.documentElement.style.setProperty('--top-height',document.getElementById('fixed-top').getBoundingClientRect().height+'px')}if(typeof ResizeObserver!=='undefined')new ResizeObserver(syncHeader).observe(document.getElementById('fixed-top'));syncHeader();
-</script><script>(()=>{const p=document.querySelector('.combined-search');p.querySelectorAll('[data-combined-series]').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(on));p.querySelector('#combined-series-'+b.dataset.combinedSeries).style.display=on?'':'none'}));p.querySelectorAll('.combined-month').forEach(r=>{['mouseenter','focus','click'].forEach(e=>r.addEventListener(e,()=>p.querySelector('.combined-reading').textContent=r.dataset.detail))})})();</script></body></html>
+</script><script>(()=>{const p=document.querySelector('.combined-search');p.querySelectorAll('[data-combined-series]').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(on));p.querySelector('#combined-series-'+b.dataset.combinedSeries).style.display=on?'':'none'}));p.querySelectorAll('.combined-month').forEach(r=>{['mouseenter','focus','click'].forEach(e=>r.addEventListener(e,()=>p.querySelector('.combined-reading').textContent=r.dataset.detail))})})();</script><script id="report-anchor-navigation">
+(()=>{
+ const spacer=document.createElement('div');spacer.id='report-anchor-space';spacer.setAttribute('aria-hidden','true');document.body.appendChild(spacer);
+ function go(target){
+  spacer.style.height='0px';
+  const header=document.querySelector('.fixed-top');
+  const offset=(header?header.getBoundingClientRect().height:0)+16;
+  const top=Math.max(0,target.getBoundingClientRect().top+window.scrollY-offset);
+  const missing=Math.max(0,top+window.innerHeight-document.documentElement.scrollHeight);
+  spacer.style.height=missing+'px';
+  // An explicit position avoids combining native anchor padding with header offsets.
+  window.scrollTo({top,behavior:'instant'});
+  history.replaceState(null,'','#'+target.id);
+ }
+ document.querySelectorAll('.fixed-top nav a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{
+  const target=document.getElementById(link.getAttribute('href').slice(1));if(!target)return;
+  event.preventDefault();go(target);
+ }));
+})();
+</script><style>@media print{#report-anchor-space{display:none!important}}</style></body></html>
